@@ -1,0 +1,3 @@
+[submodule "dev_tools_utils"]
+	path = DevToolsServer/submodules/dev_tools_utils
+	url = git@github.com:Perseverancia-company/sub.dev-tools-utils.git
