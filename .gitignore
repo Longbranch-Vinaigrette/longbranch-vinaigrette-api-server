@@ -1,4 +1,6 @@
 .idea/
+# Local settings
+local_settings.json
 
 
 # Byte-compiled / optimized / DLL files

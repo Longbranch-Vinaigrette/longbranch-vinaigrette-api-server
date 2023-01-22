@@ -1,0 +1,14 @@
+{
+  "devtools": {
+      "name": "DevTools Server",
+      "release": false,
+      "repositoryName": "dev-tools-server",
+      "version": "v1.0.0",
+      "scripts": {
+          "start":"cd DevToolsServer && python3 manage.py runserver",
+          "start_alt":"cd DevToolsServer && python3.10 manage.py runserver",
+          "startWindows": "cd DevToolsServer && python3.10 manage.py runserver"
+        },
+      "author": "FelixRiddle"
+    }
+  }
