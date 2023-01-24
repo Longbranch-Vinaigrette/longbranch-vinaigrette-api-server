@@ -5,10 +5,10 @@
       "repositoryName": "dev-tools-server",
       "version": "v1.0.0",
       "scripts": {
-          "start":"cd DevToolsServer && python3 manage.py runserver",
-          "start_alt":"cd DevToolsServer && python3.10 manage.py runserver",
-          "startWindows": "cd DevToolsServer && python3.10 manage.py runserver"
-        },
+        "setup": "pip3.10 install django",
+        "start": "python3.10 main.py --start --capture-pid",
+        "stop": "python3.10 main.py --stop"
+      },
       "author": "FelixRiddle"
     }
   }

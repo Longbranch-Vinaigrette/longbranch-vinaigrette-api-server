@@ -1,5 +1,6 @@
 .idea/
 # Local settings
+local_data.json
 local_settings.json
 
 
