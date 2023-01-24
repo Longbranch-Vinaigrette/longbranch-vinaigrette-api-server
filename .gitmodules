@@ -1,3 +1,9 @@
 [submodule "dev_tools_utils"]
 	path = DevToolsServer/src/submodules/dev_tools_utils
 	url = git@github.com:Perseverancia-company/sub.dev-tools-utils.git
+[submodule "sqlite3_utils"]
+	path = DevToolsServer/src/submodules/sqlite3_utils
+	url = git@github.com:Perseverancia-company/sub.sqlite3-utils.git
+[submodule "repository_mirror"]
+	path = DevToolsServer/src/submodules/repository_mirror
+	url = git@github.com:Perseverancia-company/sub.repository-mirror.git
