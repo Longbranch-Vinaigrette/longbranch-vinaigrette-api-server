@@ -17,6 +17,8 @@ class Main:
     def post(self, request: HttpRequest):
         """Check whether an app is DevTools compatible"""
         data = DjangoUtils().validate_json_content_type(request)
+        res = HttpResponse()
+        res.headers["Content-Type"] = "application/json"
 
         # If there is "debug" in data it means that there was an error
         if not "debug" in data:
@@ -42,24 +44,76 @@ class Main:
                 project_info = ProjectInfo(app_path)
                 commands = project_info.get_commands()
 
-                if command_name == "stop":
+                # Start
+                if command_name == "start":
+                    if "start" in commands:
+                        app_manager = AppManager(app_path)
+                        app_manager.start_app()
+                        data = {
+                            "debug": Debug("App is starting.",
+                                           state="success").get_message(),
+                        }
+                        res.write(data)
+                        return res
+                    else:
+                        data = {
+                            "debug": Debug("The app doesn't have a start command.", error=True,
+                                           state="error").get_message(),
+                        }
+                        res.write(data)
+                        return res
+                # Stop
+                elif command_name == "stop":
                     if "stop" in commands:
                         app_manager = AppManager(app_path)
+                        # The app commands are always a priority in AppManager
                         app_manager.stop_app()
                         data = {
                             "debug": Debug("Stop command run successfully.",
                                            state="success").get_message(),
                         }
+                        res.write(data)
+                        return res
                     else:
                         app_manager = AppManager(app_path)
                         app_manager.stop_app()
                         data = {
                             "debug": Debug("The app doesn't have a stop command, nevertheless it was "
-                                           "attempted to terminate the app with the kill command, which "
-                                           "is not recommended behaviour, and this should be considered "
-                                           "a bug.",
+                                           "attempted to terminate the app with the kill command.",
                                            state="danger").get_message(),
                         }
+                        res.write(data)
+                        return res
+                # Restart
+                elif command_name == "restart":
+                    # Whether a restart command exists or not is not a concern to me
+                    app_manager = AppManager(app_path)
+                    # The app commands are always a priority in AppManager
+                    app_manager.restart_app()
+                    data = {
+                        "debug": Debug("App restarting.",
+                                       state="success").get_message(),
+                    }
+                    res.write(data)
+                    return res
+                # Setup
+                elif command_name == "setup":
+                    # If the setup command exists, it will be run
+                    app_manager = AppManager(app_path)
+                    app_manager.setup_app()
+                    data = {
+                        "debug": Debug("Success, if the setup command exists, it will run.",
+                                       state="success").get_message(),
+                    }
+                    res.write(data)
+                    return res
+
+                data = {
+                    "debug": Debug("Command not found.", error=True,
+                                   state="error").get_message(),
+                }
+                res.write(data)
+                return res
             except Exception as ex:
                 print("Exception: ", ex)
                 data = {
