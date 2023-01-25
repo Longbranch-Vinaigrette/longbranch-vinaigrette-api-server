@@ -10,6 +10,12 @@ from src.submodules.dev_tools_utils.dbs.RepositorySettings import RepositorySett
 from src.submodules.dev_tools_utils.app_manager import AppManager
 
 
+def send_response(data: dict):
+    res = HttpResponse(json.dumps(data))
+    res.headers["Content-Type"] = "application/json"
+    return res
+
+
 class Main:
     def __init__(self, route: str):
         self.route = route
@@ -17,8 +23,6 @@ class Main:
     def post(self, request: HttpRequest):
         """Check whether an app is DevTools compatible"""
         data = DjangoUtils().validate_json_content_type(request)
-        res = HttpResponse()
-        res.headers["Content-Type"] = "application/json"
 
         # If there is "debug" in data it means that there was an error
         if not "debug" in data:
@@ -35,10 +39,9 @@ class Main:
                                    f"{str(ex)}",
                                    state="danger").get_message(),
                 }
-                res = HttpResponse(json.dumps(data))
-                res.headers["Content-Type"] = "application/json"
-                return res
+                return send_response(data)
 
+            # Try to execute the command
             try:
                 # It raises an exception if the app is not devtools compatible
                 project_info = ProjectInfo(app_path)
@@ -53,15 +56,13 @@ class Main:
                             "debug": Debug("App is starting.",
                                            state="success").get_message(),
                         }
-                        res.write(data)
-                        return res
+                        return send_response(data)
                     else:
                         data = {
                             "debug": Debug("The app doesn't have a start command.", error=True,
                                            state="error").get_message(),
                         }
-                        res.write(data)
-                        return res
+                        return send_response(data)
                 # Stop
                 elif command_name == "stop":
                     if "stop" in commands:
@@ -72,8 +73,7 @@ class Main:
                             "debug": Debug("Stop command run successfully.",
                                            state="success").get_message(),
                         }
-                        res.write(data)
-                        return res
+                        return send_response(data)
                     else:
                         app_manager = AppManager(app_path)
                         app_manager.stop_app()
@@ -82,8 +82,7 @@ class Main:
                                            "attempted to terminate the app with the kill command.",
                                            state="danger").get_message(),
                         }
-                        res.write(data)
-                        return res
+                        return send_response(data)
                 # Restart
                 elif command_name == "restart":
                     # Whether a restart command exists or not is not a concern to me
@@ -94,8 +93,7 @@ class Main:
                         "debug": Debug("App restarting.",
                                        state="success").get_message(),
                     }
-                    res.write(data)
-                    return res
+                    return send_response(data)
                 # Setup
                 elif command_name == "setup":
                     # If the setup command exists, it will be run
@@ -105,15 +103,13 @@ class Main:
                         "debug": Debug("Success, if the setup command exists, it will run.",
                                        state="success").get_message(),
                     }
-                    res.write(data)
-                    return res
+                    return send_response(data)
 
                 data = {
                     "debug": Debug("Command not found.", error=True,
                                    state="error").get_message(),
                 }
-                res.write(data)
-                return res
+                return send_response(data)
             except Exception as ex:
                 print("Exception: ", ex)
                 data = {
@@ -121,9 +117,7 @@ class Main:
                                    state="danger").get_message(),
                 }
 
-        res = HttpResponse(json.dumps(data))
-        res.headers["Content-Type"] = "application/json"
-        return res
+        return send_response(data)
 
     def handle_request(self, req: HttpRequest):
         """Handle request"""
