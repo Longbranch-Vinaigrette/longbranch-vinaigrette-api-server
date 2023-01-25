@@ -28,8 +28,8 @@ class Main:
                 project_info = ProjectInfo(app_path)
 
                 data = {
-                    "debug": Debug("The app is not DevTools compatible.",
-                                   state="danger").get_message(),
+                    "debug": Debug("The app is DevTools compatible.",
+                                   state="success").get_message(),
                     keywordA: True,
                 }
 

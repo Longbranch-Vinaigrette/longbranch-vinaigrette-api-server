@@ -1,8 +1,11 @@
-.idea/
-# Local settings
+# Data stuff
 local_data.json
 local_settings.json
+pid
+.cache
 
+# For pycharm
+.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
