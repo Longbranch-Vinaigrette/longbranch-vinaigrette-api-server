@@ -11,10 +11,6 @@ parser.add_argument("--start", action="store_true",
                     help="Start server in the background.")
 parser.add_argument("--stop", action="store_true",
                     help="Stop server in the background.")
-parser.add_argument("--store-pid", action="store_true",
-                    help="Store the pid in local_data.json.")
-parser.add_argument("--capture-pid", action="store_true",
-                    help="Store the pid in local_data.json.")
 
 # Parse args
 args = parser.parse_args()
@@ -40,9 +36,8 @@ try:
     start_cmds = f"""
     cd DevToolsServer && python3.10 manage.py runserver 37000;
     """
-    capture_pidA = args.store_pid or args.capture_pid
 
-    self_app_management = SelfAppManager(start_cmds, capture_pid=capture_pidA)
+    self_app_management = SelfAppManager(start_cmds)
     if args.start:
         self_app_management.start_app()
 
