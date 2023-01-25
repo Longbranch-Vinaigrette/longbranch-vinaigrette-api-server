@@ -65,22 +65,29 @@ class Main:
                         return send_response(data)
                 # Stop
                 elif command_name == "stop":
+                    print("Running stop command")
+
+                    # The priorities of app manager are as follows:
+                    # First: It checks for a stop command
+                    # Second: It checks for the pid to terminate the program
+                    # Third: If all the previous weren't able to be done, this will search
+                    # the app with the ps command and try to figure out which app it's to
+                    # terminate it.
+                    app_manager = AppManager(app_path, debug=True)
+                    app_manager.stop_app()
+
                     if "stop" in commands:
-                        app_manager = AppManager(app_path)
-                        # The app commands are always a priority in AppManager
-                        app_manager.stop_app()
                         data = {
                             "debug": Debug("Stop command run successfully.",
                                            state="success").get_message(),
                         }
                         return send_response(data)
                     else:
-                        app_manager = AppManager(app_path)
-                        app_manager.stop_app()
+                        print("App has no stop command trying it the hard way")
                         data = {
                             "debug": Debug("The app doesn't have a stop command, nevertheless it was "
-                                           "attempted to terminate the app with the kill command.",
-                                           state="danger").get_message(),
+                                           "attempted to terminate the app with 'kill -s 15' command.",
+                                           state="success").get_message(),
                         }
                         return send_response(data)
                 # Restart

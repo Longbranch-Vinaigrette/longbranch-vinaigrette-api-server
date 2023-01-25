@@ -1,8 +1,10 @@
 import argparse
 import os
 import signal
+import subprocess
 
 from DevToolsServer.src.submodules.dev_tools_utils.app_manager.SelfAppManager import SelfAppManager
+from DevToolsServer.src.submodules.dev_tools_utils.data_configuration.ProjectInfo import ProjectInfo
 
 
 # Instantiate the parser
@@ -40,6 +42,11 @@ try:
     self_app_management = SelfAppManager(start_cmds)
     if args.start:
         self_app_management.start_app()
+        # subprocess.run([
+        #     "/bin/bash",
+        #     "-c",
+        #     f"'cd {os.getcwd()}{os.path.sep}DevToolsServer; "
+        #     f"{ProjectInfo(os.getcwd()).get_commands()['internalStart']};'"])
 
     if args.stop:
         self_app_management.stop_app()
