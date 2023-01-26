@@ -1,6 +1,10 @@
 import argparse
 import os
 import signal
+import subprocess
+
+from DevToolsServer.src.submodules.dev_tools_utils.app_manager.SelfAppManager import SelfAppManager
+from DevToolsServer.src.submodules.dev_tools_utils.data_configuration.ProjectInfo import ProjectInfo
 
 
 # Instantiate the parser
@@ -31,11 +35,21 @@ signal.signal(signal.SIGTERM, signal_handler)
 
 # Start or stop the app
 try:
+    start_cmds = f"""
+    cd DevToolsServer && python3.10 manage.py runserver 37000;
+    """
+
+    self_app_management = SelfAppManager(start_cmds)
     if args.start:
-        pass
+        self_app_management.start_app()
+        # subprocess.run([
+        #     "/bin/bash",
+        #     "-c",
+        #     f"'cd {os.getcwd()}{os.path.sep}DevToolsServer; "
+        #     f"{ProjectInfo(os.getcwd()).get_commands()['internalStart']};'"])
 
     if args.stop:
-        pass
+        self_app_management.stop_app()
 finally:
     # Not usually executed, unreliable
     os.killpg(0, signal.SIGKILL)
