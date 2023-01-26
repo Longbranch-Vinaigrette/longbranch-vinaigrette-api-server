@@ -1,12 +1,10 @@
 import json
-import subprocess
 
 from django.http import HttpResponse, HttpRequest
 
 from src.submodules.dev_tools_utils.django_utils import DjangoUtils
 from src.submodules.dev_tools_utils.Debug import Debug
 from src.submodules.dev_tools_utils.data_configuration.ProjectInfo import ProjectInfo
-from src.submodules.dev_tools_utils.dbs.RepositorySettings import RepositorySettings
 from src.submodules.dev_tools_utils.app_manager import AppManager
 
 
@@ -67,7 +65,7 @@ class Main:
                 elif command_name == "stop":
                     print("Running stop command")
 
-                    # The priorities of app manager are as follows:
+                    # The priorities of app manager to stop an app are as follows:
                     # First: It checks for a stop command
                     # Second: It checks for the pid to terminate the program
                     # Third: If all the previous weren't able to be done, this will search
