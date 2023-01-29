@@ -4,7 +4,8 @@ from django.http import HttpResponse, HttpRequest
 
 from src.submodules.dev_tools_utils.django_utils import DjangoUtils
 from src.submodules.dev_tools_utils.Debug import Debug
-from src.submodules.dev_tools_utils.dbs.SettingsTable import SettingsTable
+from src.submodules.dev_tools_utils.local_repository_manager import LocalRepositoryManager
+from src.submodules.dev_tools_utils.dbs.RepositorySettingsTable import RepositorySettingsTable
 
 
 def send_response(data: dict):
@@ -13,11 +14,22 @@ def send_response(data: dict):
     return res
 
 
+def get_item_index(l, value):
+    """Get the index of an item in a given list"""
+    try:
+        for i, val in enumerate(l):
+            if val == value:
+                return i
+    except:
+        return None
+
+
 class Main:
     def __init__(self, route: str):
         self.route = route
+        self.debug = True
 
-    def get(self, request: HttpRequest):
+    def post(self, request: HttpRequest):
         """Get user apps"""
         data = DjangoUtils().validate_json_content_type(request)
 
@@ -28,11 +40,10 @@ class Main:
             # Check if the required data was given
             try:
                 # Inform the user in case the data is in a bad format.
-                keys_list = body["keys"]
+                user = body["user"]
 
-                # If there are no keys, return error.
-                if len(keys_list) <= 0:
-                    raise Exception("No data given.")
+                if not user:
+                    raise Exception("No user given, or the data is in bad format.")
             except Exception as ex:
                 print("Exception: ", ex)
                 data = {
@@ -44,13 +55,40 @@ class Main:
 
             # Try to execute the command
             try:
-                settings_table = SettingsTable()
-                data["data"] = {}
-                new_data = data["data"]
+                # Start the database connection
+                repository_settings_table = RepositorySettingsTable()
+                old_user_repositories = repository_settings_table.get_user_repositories(user)
+                old_repositories_names = [repository["name"] for repository in old_user_repositories]
 
-                # To set multiple keys at once
-                for key in keys_list:
-                    new_data[key] = settings_table.get(key)
+                # Update data in case there's a new repository not register in
+                # repository settings
+                updated_repository_info = LocalRepositoryManager().get_user_repos_info(user)
+                if self.debug:
+                    print(f"User: {user}")
+                    print("Repositories: ", old_repositories_names)
+                for repository in updated_repository_info:
+                    name = repository["name"]
+                    if self.debug:
+                        print(f"--- Repository name: {name}")
+
+                    # Check if the name is in the list of old_repositories_name
+                    if name in old_repositories_names:
+                        if self.debug:
+                            print("\t[Yes] Name does exist in old repositories")
+                        # Remove that name from the list
+                        repository_index = get_item_index(old_repositories_names, name)
+                        if self.debug:
+                            print(f"\tIts index is {str(repository_index)}")
+                            print(f"\tIts value is {old_repositories_names[repository_index]}")
+                        if repository_index is not None:
+                            del old_repositories_names[repository_index]
+
+                # Remove the repositories that weren't found on the RepositorySettingsTable
+                if self.debug:
+                    print("Repositories not found: ", old_repositories_names)
+
+
+                # Retrieve repository settings data
 
                 return send_response(data)
             except Exception as ex:
@@ -62,9 +100,14 @@ class Main:
 
         return send_response(data)
 
+    def get(self, request: HttpRequest):
+        raise Exception("This route doesn't handle the given method.")
+
     def handle_request(self, req: HttpRequest):
         """Handle request"""
         if req.method == "POST":
             return self.post(req)
+        elif req.method == "GET":
+            return self.get(req)
         else:
             raise Exception("This route doesn't handle the given method.")
