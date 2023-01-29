@@ -82,13 +82,25 @@ class Main:
                             print(f"\tIts value is {old_repositories_names[repository_index]}")
                         if repository_index is not None:
                             del old_repositories_names[repository_index]
+                    else:
+                        if self.debug:
+                            print("\t[No] Name does exist in old repositories")
+                            print("\tInserting it.")
+
+                        # The name wasn't found, insert it
+                        repository_settings_table.upsert(repository, {
+                            "user": user,
+                            "name": name,
+                        })
 
                 # Remove the repositories that weren't found on the RepositorySettingsTable
                 if self.debug:
                     print("Repositories not found: ", old_repositories_names)
+                for name in old_repositories_names:
+                    if self.debug:
+                        print(f"Deleting: {user}/{name}")
+                    repository_settings_table.delete_row(user, name)
 
-
-                # Retrieve repository settings data
 
                 return send_response(data)
             except Exception as ex:
