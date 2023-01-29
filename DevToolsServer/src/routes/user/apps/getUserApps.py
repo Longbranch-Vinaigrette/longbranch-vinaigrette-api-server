@@ -27,7 +27,7 @@ def get_item_index(l, value):
 class Main:
     def __init__(self, route: str):
         self.route = route
-        self.debug = True
+        self.debug = False
 
     def post(self, request: HttpRequest):
         """Get user apps"""
@@ -101,7 +101,11 @@ class Main:
                         print(f"Deleting: {user}/{name}")
                     repository_settings_table.delete_row(user, name)
 
+                # Now that the repositories have been updated, it's time to retrieve them
+                updated_repositories = repository_settings_table.get_user_repositories(user)
 
+                # Add to the data
+                data["apps"] = updated_repositories
                 return send_response(data)
             except Exception as ex:
                 print("Exception: ", ex)
