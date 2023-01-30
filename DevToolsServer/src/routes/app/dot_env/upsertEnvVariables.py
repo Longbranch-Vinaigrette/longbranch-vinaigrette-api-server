@@ -50,16 +50,11 @@ class Main:
                 return dj_utils.get_json_response(data)
 
             try:
-                print("Env: ", env)
                 # .env encoder
-                dotenv = DotEnv5(path=path, debug=True)
-
-                # print("Parser with comments: ", dotenv.get_parsed_dot_env(with_comments=True))
+                dotenv = DotEnv5(path=path)
 
                 # Upsert data
                 dotenv.upsert_dot_env(env)
-                # print("Parser with comments after upsert: ",
-                #       dotenv.get_parsed_dot_env(with_comments=True))
 
                 return dj_utils.get_json_response({
                     "debug": Debug("Data upserted(Updated or Inserted).", state="success").get_message()
