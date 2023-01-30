@@ -4,3 +4,6 @@
 [submodule "sqlite3_utils"]
 	path = DevToolsServer/src/submodules/sqlite3_utils
 	url = git@github.com:Perseverancia-company/sub.sqlite3-utils.git
+[submodule "dotenv5"]
+	path = DevToolsServer/src/submodules/dotenv5
+	url = git@github.com:Perseverancia-company/sub.dotenv5.git

@@ -4,7 +4,7 @@ from django.http import HttpRequest
 
 from src.submodules.dev_tools_utils.django_utils import DjangoUtils
 from src.submodules.dev_tools_utils.Debug import Debug
-from src.submodules.dev_tools_utils.dot_env import DotEnvEncoder
+from src.submodules.dotenv5 import DotEnv5
 
 
 class Main:
@@ -52,9 +52,15 @@ class Main:
             try:
                 print("Env: ", env)
                 # .env encoder
-                encoder = DotEnvEncoder(env, path=path, debug=True)
+                dotenv = DotEnv5(path=path, debug=True)
+
+                # print("Parser with comments: ", dotenv.get_parsed_dot_env(with_comments=True))
+
                 # Upsert data
-                encoder.upsert_dot_env()
+                dotenv.upsert_dot_env(env)
+                # print("Parser with comments after upsert: ",
+                #       dotenv.get_parsed_dot_env(with_comments=True))
+
                 return dj_utils.get_json_response({
                     "debug": Debug("Data upserted(Updated or Inserted).", state="success").get_message()
                 })
