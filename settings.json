@@ -10,6 +10,16 @@
         "stop": "python3.10 main.py --stop && rm ./pid",
         "internalStart": "python3.10 manage.py runserver 37000"
       },
-      "author": "FelixRiddle"
+      "author": "FelixRiddle",
+      "env": {
+        "fileName": ".env",
+        "variables": [
+          {
+            "formalName": "Server port",
+            "varName": "PORT",
+            "description": "Server port, defaults to 37000."
+          }
+        ]
+      }
     }
   }
