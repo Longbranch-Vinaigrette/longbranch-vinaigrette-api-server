@@ -24,7 +24,6 @@ class Main:
         # Try to execute the command
         try:
             local = LocalRepositoryManager()
-            print("Local: ", local)
             return send_response({
                 "users": local.get_users()
             })
