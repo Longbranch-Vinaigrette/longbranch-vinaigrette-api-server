@@ -57,12 +57,21 @@ MIDDLEWARE = [
 # https://github.com/adamchainz/django-cors-headers#setup
 # https://stackoverflow.com/questions/35760943/how-can-i-enable-cors-on-django-rest-framework
 CORS_ALLOWED_ORIGINS = [
+    # The finest product
     "http://localhost:37002",
     "http://127.0.0.1:37002",
     "http://localhost:37001",
     "http://127.0.0.1:37001",
     "http://localhost:37000",
     "http://127.0.0.1:37000",
+
+    # Testing suite
+    "http://localhost:36002",
+    "http://127.0.0.1:36002",
+    "http://localhost:36001",
+    "http://127.0.0.1:36001",
+    "http://localhost:36000",
+    "http://127.0.0.1:36000",
 ]
 
 ROOT_URLCONF = 'DevToolsServer.urls'
