@@ -13,7 +13,7 @@ class Main:
         self.debug = False
 
     def post(self, request: HttpRequest):
-        """Insert or replace .env variables"""
+        """Get .env data"""
         dj_utils = DjangoUtils(request)
         data = dj_utils.validate_json_content_type(request)
 
@@ -32,15 +32,6 @@ class Main:
                 if not path or not isinstance(path, str):
                     msg = "No path given, path is not a string or bad format."
                     raise Exception(msg)
-
-                # Set error message to give to the user
-                msg = "Key error, env was not given."
-
-                # Get the env variables
-                env = body["env"]
-                if not env or not isinstance(env, dict):
-                    msg = "No env given, env is not an object/dictionary or bad format."
-                    raise Exception(msg)
             except Exception as ex:
                 print("Exception: ", ex)
                 data = {
@@ -52,12 +43,8 @@ class Main:
             try:
                 # DotEnv5
                 dotenv = DotEnv5(path=path)
-
-                # Upsert data
-                dotenv.upsert_dot_env(env)
-
                 return dj_utils.get_json_response({
-                    "debug": Debug("Data upserted(Updated or Inserted).", state="success").get_message()
+                    "data": dotenv.get_parsed_dot_env()
                 })
             except Exception as ex:
                 print("Exception: ", ex)
