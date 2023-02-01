@@ -6,8 +6,8 @@
       "version": "v1.0.0",
       "commands": {
         "setup": "pip3.10 install django",
-        "start": "python3.10 main.py --start & echo $! > ./pid",
-        "stop": "python3.10 main.py --stop && rm ./pid",
+        "start": "python3.10 main.py --start",
+        "stop": "python3.10 main.py --stop",
         "internalStart": "python3.10 manage.py runserver 37000"
       },
       "author": "FelixRiddle",

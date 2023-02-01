@@ -1,9 +1,9 @@
 import argparse
 import os
 import signal
-import subprocess
 
 from DevToolsServer.src.submodules.dev_tools_utils.app_manager.SelfAppManager import SelfAppManager
+from DevToolsServer.src.submodules.dev_tools_utils.app_manager import AppManager
 
 
 # Instantiate the parser
