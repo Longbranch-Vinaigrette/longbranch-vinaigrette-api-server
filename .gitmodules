@@ -7,3 +7,6 @@
 [submodule "dotenv5"]
 	path = DevToolsServer/src/submodules/dotenv5
 	url = git@github.com:Perseverancia-company/sub.dotenv5.git
+[submodule "process_utils"]
+	path = DevToolsServer/src/submodules/process_utils
+	url = git@github.com:Perseverancia-company/sub.process-utils.git
