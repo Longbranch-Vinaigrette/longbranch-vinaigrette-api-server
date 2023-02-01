@@ -1,11 +1,19 @@
 {
   "devtools": {
+      "information": {
+        "appType": "server",
+        "appFramework": "django",
+        "language": "python",
+        "languageInformation": {
+          "version": "3.10.6"
+        }
+      },
       "name": "DevTools Server",
       "release": false,
       "repositoryName": "dev-tools-server",
       "version": "v1.0.0",
       "commands": {
-        "setup": "pip3.10 install django",
+        "setup": "pip3.10 install django; git config alias.supdate 'submodule update --remote --init --recursive --merge'; git supdate;",
         "start": "python3.10 main.py --start",
         "stop": "python3.10 main.py --stop",
         "internalStart": "python3.10 manage.py runserver 37000"
