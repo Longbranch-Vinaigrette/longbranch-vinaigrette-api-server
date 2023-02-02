@@ -1,5 +1,15 @@
 {
   "devtools": {
+      "dependencies": [
+        {
+            "name": "Django",
+            "version": "4.1.5"
+        },
+        {
+          "name": "django-cors-headers",
+          "version": "3.13.0"
+        }
+      ],
       "information": {
         "appType": "server",
         "appFramework": "django",
