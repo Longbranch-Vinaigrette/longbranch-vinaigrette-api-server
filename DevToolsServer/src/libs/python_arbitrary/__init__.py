@@ -14,19 +14,31 @@ class PythonArbitrary:
                  arguments: list = [],
                  folder_name: str = "PYTHON_ARBITRARY",
                  debug: bool = False):
-        # User folder may contain weird characters so let's replace em all for '_'
+        # User input may contain weird characters so let's replace em all for '_'
         user_folder_name = user_folder_name.replace(":", "_")
         user_folder_name = user_folder_name.replace(".", "_")
-        self.session_id = session_id
+        user_folder_name = user_folder_name.replace("-", "_")
+
+        session_id = session_id.replace(":", "_")
+        session_id = session_id.replace(".", "_")
+        session_id = session_id.replace("-", "_")
+
+        # In case it starts with a number, which is not allowed by python standards
+        user_folder_name = f"user_{user_folder_name}"
+        session_id = f"sid_{session_id}"
+
         self.code = code
         self.arguments = arguments
         self.debug = debug
+
+        # Absolute import from the project root folder
+        self.absolute_python_import = f"{folder_name}.{user_folder_name}.{session_id}.main"
 
         # Where the scripts will be stored
         self.cache_path = f"{os.getcwd()}{os.path.sep}{folder_name}"
         self.user_path = f"{self.cache_path}{os.path.sep}{user_folder_name}"
         self.session_path = f"{self.user_path}{os.path.sep}{session_id}"
-        self.filename = f"{self.session_path}{os.path.sep}main.py"
+        self.file_path = f"{self.session_path}{os.path.sep}main.py"
 
         # Check if the folders exist, if not just make them.
         if not os.path.exists(self.cache_path):
@@ -35,6 +47,10 @@ class PythonArbitrary:
             os.mkdir(self.user_path)
         if not os.path.exists(self.session_path):
             os.mkdir(self.session_path)
+
+        # Make it a module
+        with open(f"{self.session_path}{os.path.sep}__init__.py", "w") as f:
+            f.write("\n")
 
         # Import template
         with open(f"{os.getcwd()}{os.path.sep}spec{os.path.sep}template") as f:
@@ -56,7 +72,7 @@ class PythonArbitrary:
 
     def mkfile(self, code: str):
         """Make the file to run"""
-        with open(self.filename, "w") as f:
+        with open(self.file_path, "w") as f:
             f.write(self.encode_script(code))
 
     def end(self):
@@ -67,15 +83,16 @@ class PythonArbitrary:
         """Run the script and get its result"""
         # The first argument, is the module relative import
         # The second argument is the path where the module will be found
-        spec = importlib.util.spec_from_file_location("main", self.user_path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        module = importlib.import_module(self.absolute_python_import)
 
         # Try to get the result
         try:
+            result = module.DEVTOOLS_RESULT
+
             # The result is in the module object
-            return module.DEVTOOLS_RESULT
-        except:
+            return result
+        except Exception as ex:
+            print("Exception on run: ", ex)
             raise Exception("No result found")
 
     def mkfile_and_run(self):
@@ -89,7 +106,8 @@ class PythonArbitrary:
         # Run the script
         try:
             result = self.run()
-        except:
+        except Exception as ex:
+            print("Exception: ", ex)
             result = {
                 "debug": {
                     "message": "Successfully loaded and ran the script.",
@@ -98,5 +116,5 @@ class PythonArbitrary:
                 }
             }
 
-        # self.end()
+        self.end()
         return result
