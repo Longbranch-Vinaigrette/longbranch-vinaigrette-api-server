@@ -10,3 +10,6 @@
 [submodule "process_utils"]
 	path = DevToolsServer/src/submodules/process_utils
 	url = git@github.com:Perseverancia-company/sub.process-utils.git
+[submodule "gitconfig"]
+	path = DevToolsServer/src/submodules/gitconfig
+	url = git@github.com:Perseverancia-company/sub.gitconfig.git
