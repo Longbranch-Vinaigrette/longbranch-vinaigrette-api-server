@@ -14,17 +14,12 @@ from src.libs.python_arbitrary import PythonArbitrary
 
 class Main(RouteHandler):
     def __init__(self, route: str):
-        super().__init__(route, post_fn=self.post_req, get_fn=self.get_req)
+        super().__init__(route, post_fn=self.post_req, mime_type="text/plain")
 
     def post_req(self, request: HttpRequest):
         """Post request"""
-        print("Host: ", request.get_host())
-        print("Port: ", request.get_port())
-        folder_name = request.get_host() + request.get_port()
+        print(f"Route {self.route}")
+        folder_name = request.get_host()
         print("Folder name: ", folder_name)
-        return dj_utils.get_json_response({"status": "Not implemented."})
 
-    def get_req(self, request: HttpRequest):
-        """Get request"""
-        python_arbitrary = PythonArbitrary(request.get_host(), str(uuid.uuid4()))
         return dj_utils.get_json_response({"status": "Not implemented."})
