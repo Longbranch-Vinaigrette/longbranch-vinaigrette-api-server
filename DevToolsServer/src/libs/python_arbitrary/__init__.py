@@ -13,6 +13,7 @@ class PythonArbitrary:
                  code: str,
                  arguments: list = [],
                  folder_name: str = "PYTHON_ARBITRARY",
+                 remove_at_the_end: bool = True,
                  debug: bool = False):
         # User input may contain weird characters so let's replace em all for '_'
         user_folder_name = user_folder_name.replace(":", "_")
@@ -27,18 +28,21 @@ class PythonArbitrary:
         user_folder_name = f"user_{user_folder_name}"
         session_id = f"sid_{session_id}"
 
-        self.code = code
+        self.code = self.add_tabs_to_every_line(code)
         self.arguments = arguments
+        self.remove_at_the_end: bool = remove_at_the_end
         self.debug = debug
 
+        self.filename = "main"
+
         # Absolute import from the project root folder
-        self.absolute_python_import = f"{folder_name}.{user_folder_name}.{session_id}.main"
+        self.absolute_python_import = f"{folder_name}.{user_folder_name}.{session_id}.{self.filename}"
 
         # Where the scripts will be stored
         self.cache_path = f"{os.getcwd()}{os.path.sep}{folder_name}"
         self.user_path = f"{self.cache_path}{os.path.sep}{user_folder_name}"
         self.session_path = f"{self.user_path}{os.path.sep}{session_id}"
-        self.file_path = f"{self.session_path}{os.path.sep}main.py"
+        self.file_path = f"{self.session_path}{os.path.sep}{self.filename}.py"
 
         # Check if the folders exist, if not just make them.
         if not os.path.exists(self.cache_path):
@@ -53,8 +57,22 @@ class PythonArbitrary:
             f.write("\n")
 
         # Import template
-        with open(f"{os.getcwd()}{os.path.sep}spec{os.path.sep}template") as f:
+        with open(f"{os.getcwd()}{os.path.sep}spec{os.path.sep}template.py") as f:
             self.template = f.read()
+
+    def add_tabs_to_every_line(self, string: str):
+        """Add a tab to every line of the given string"""
+        lines = string.splitlines()
+        new_str: str = ""
+
+        # Add a tab to every line
+        for index, line in enumerate(lines):
+            if not (index == 0):
+                new_str += f"    {line}\n"
+            else:
+                new_str += f"{line}\n"
+
+        return new_str
 
     def encode_script(self, code: str) -> str:
         """Encode the script into the template"""
@@ -116,5 +134,7 @@ class PythonArbitrary:
                 }
             }
 
-        self.end()
+        # Remove files and folders
+        if self.remove_at_the_end:
+            self.end()
         return result

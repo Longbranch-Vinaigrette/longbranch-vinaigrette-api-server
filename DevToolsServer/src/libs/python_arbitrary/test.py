@@ -24,7 +24,8 @@ arbitrary = PythonArbitrary(
         {
             "path": "/home/USERNAME/.devtools/repositories"
         }
-    ]
+    ],
+    remove_at_the_end=False
 )
 result = arbitrary.mkfile_and_run()
 print("Result given: ", result)
