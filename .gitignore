@@ -1,3 +1,7 @@
+# Python arbitrary
+PYTHON_ARBITRARY/
+
+# --- Devtols ---
 # Data stuff
 local_data.json
 local_settings.json
@@ -6,7 +10,7 @@ pid
 
 # For pycharm
 .idea/
-
+# --- GitHub Auto-Generated --
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

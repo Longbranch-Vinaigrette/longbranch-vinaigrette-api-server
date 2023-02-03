@@ -21,5 +21,5 @@ print("Argument given: ", DEVTOOLS_ARG_1)
 
 # Communication
 
-The running script will retrieve the variable 'DEVTOOLS_RESULT' which SHOULD be the result
-the user expected.
+The running script MUST retrieve the variable 'DEVTOOLS_RESULT' when available, which should
+be the result the user expected.
