@@ -1,7 +1,25 @@
 # Spec
 
 The app must replace the following with its respective values:
-$DEVTOOLS_ARGS: This SHALL be comma separated values that represent the arguments,
-the user can receive and will manipulate.
-$USER_CODE: This MUST be replaced by the code given by the user.
+$DEVTOOLS_ARGS: This SHALL be replaced by variables named in the following way:
+DEVTOOLS_ARG_[n] = [VALUE]
+Where [n] represents the number of the argument.
+Where [VALUE] represents its corresponding value.
+Example:
+```python
+DEVTOOLS_ARG_1 = "Some text"
+DEVTOOLS_ARG_2 = { "username": "username", "password": "password" }
+```
 
+$USER_CODE: This MUST be replaced by the code given by the user.
+Example:
+```python
+DEVTOOLS_ARG_1 = "Some text"
+### --- Auto-generated code ends ---
+print("Argument given: ", DEVTOOLS_ARG_1)
+```
+
+# Communication
+
+The running script will retrieve the variable 'DEVTOOLS_RESULT' which SHOULD be the result
+the user expected.
