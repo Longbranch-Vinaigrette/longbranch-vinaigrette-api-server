@@ -8,6 +8,7 @@ from django.http import HttpRequest
 
 from src.submodules.dev_tools_utils.django_utils.route_object.Main import Main as RouteHandler
 import src.submodules.dev_tools_utils.django_utils as dj_utils
+from src.submodules.dev_tools_utils.Debug import Debug
 
 from src.libs.python_arbitrary import PythonArbitrary
 
@@ -19,11 +20,8 @@ class Main(RouteHandler):
     def post_req(self, request: HttpRequest):
         """Post request"""
         folder_name = request.get_host()
-        print("Folder name: ", folder_name)
 
         script = request.body.decode("utf-8")
-        print("Body: ", script)
-        print("ITs type: \n", type(script))
         arbitrary = PythonArbitrary(
             folder_name,
             str(uuid.uuid4()),
@@ -38,8 +36,17 @@ class Main(RouteHandler):
                     "Content-Type": "text/plain"
                 }
             ],
-            remove_at_the_end=False
+            remove_at_the_end=True
         )
         result = arbitrary.mkfile_and_run()
-        print("Result: ", result)
-        return result
+        if isinstance(result, list) or isinstance(result, dict):
+            return dj_utils.get_json_response(result)
+        else:
+            return dj_utils.get_json_response(
+                Debug().get_full_message(
+                    "The code was run, but no result was returned from it."
+                    "This may be an error too.",
+                    error=False,
+                    state="success"
+                )
+            )
