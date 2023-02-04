@@ -35,11 +35,14 @@ class PythonArbitrary:
 
         self.filename = "main"
 
+        # Get the current folder
+        current_folder = os.path.dirname(os.path.realpath(__name__))
+
         # Absolute import from the project root folder
         self.absolute_python_import = f"{folder_name}.{user_folder_name}.{session_id}.{self.filename}"
 
         # Where the scripts will be stored
-        self.cache_path = f"{os.getcwd()}{os.path.sep}{folder_name}"
+        self.cache_path = f"{current_folder}{os.path.sep}{folder_name}"
         self.user_path = f"{self.cache_path}{os.path.sep}{user_folder_name}"
         self.session_path = f"{self.user_path}{os.path.sep}{session_id}"
         self.file_path = f"{self.session_path}{os.path.sep}{self.filename}.py"

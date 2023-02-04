@@ -18,8 +18,27 @@ class Main(RouteHandler):
 
     def post_req(self, request: HttpRequest):
         """Post request"""
-        print(f"Route {self.route}")
         folder_name = request.get_host()
         print("Folder name: ", folder_name)
+
+        script = request.body.decode("utf-8")
+        print("Body: ", script)
+        print("ITs type: \n", type(script))
+        arbitrary = PythonArbitrary(
+            folder_name,
+            str(uuid.uuid4()),
+            script,
+            arguments=[
+                {
+                    "host": request.get_host(),
+                    "port": request.get_port(),
+                    "route": request.get_full_path()
+                },
+                {
+                    "Content-Type": "text/plain"
+                }
+            ],
+            remove_at_the_end=False
+        )
 
         return dj_utils.get_json_response({"status": "Not implemented."})
