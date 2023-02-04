@@ -40,5 +40,6 @@ class Main(RouteHandler):
             ],
             remove_at_the_end=False
         )
-
-        return dj_utils.get_json_response({"status": "Not implemented."})
+        result = arbitrary.mkfile_and_run()
+        print("Result: ", result)
+        return result
