@@ -129,7 +129,7 @@ class PythonArbitrary:
             print("Exception: ", ex)
             result = {
                 "debug": {
-                    "message": "Successfully loaded and ran the script.",
+                    "message": "Either the script ran successfully or it threw an error.",
                     "state": "success",
                     "error": False,
                 }
