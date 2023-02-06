@@ -36,7 +36,7 @@ class Main(RouteHandler):
                     "Content-Type": "text/plain"
                 }
             ],
-            remove_at_the_end=False
+            remove_at_the_end=True
         )
         result = arbitrary.mkfile_and_run()
         if isinstance(result, list) or isinstance(result, dict):
