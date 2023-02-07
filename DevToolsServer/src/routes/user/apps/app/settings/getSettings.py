@@ -1,4 +1,5 @@
 import json
+import pprint
 
 from src.submodules.dev_tools_utils.django_utils.route_object.Main import Main as RouteHandler
 import src.submodules.dev_tools_utils.django_utils as dj_utils
@@ -14,4 +15,8 @@ class Main(RouteHandler):
         """Post request"""
         body: dict = json.loads(request.body.decode("utf-8"))
         path = body["path"]
-        return dj_utils.get_json_response(ProjectSettings(path).get_settings())
+        app_settings = ProjectSettings(path).get_settings()
+        print("App settings: ")
+        pprint.pprint(app_settings)
+
+        return dj_utils.get_json_response(app_settings)
