@@ -1,49 +1,30 @@
-import json
+from django.http import HttpRequest
 
-from django.http import HttpResponse, HttpRequest
-
+from src.submodules.dev_tools_utils.django_utils.route_object.Main import Main as RouteHandler
+import src.submodules.dev_tools_utils.django_utils as dj_utils
 from src.submodules.dev_tools_utils.Debug import Debug
 from src.submodules.dev_tools_utils.local_repository_manager import LocalRepositoryManager
 
 
-def send_response(data: dict):
-    res = HttpResponse(json.dumps(data))
-    res.headers["Content-Type"] = "application/json"
-    return res
-
-
-class Main:
+class Main(RouteHandler):
     def __init__(self, route: str):
-        self.route = route
+        super().__init__(route, get_fn=self.get_req)
 
-    def get(self, request: HttpRequest):
+    def get_req(self, request: HttpRequest):
         """Get users locally on /home/USERNAME/.devtools/repositories
 
         It returns a list of folder names in /home/USERNAME/.devtools/repositories.
         """
-        # Try to execute the command
         try:
+            # Get users
             local = LocalRepositoryManager()
-            return send_response({
+            return dj_utils.get_json_response({
                 "users": local.get_users()
             })
         except Exception as ex:
             print("Exception: ", ex)
             data = {
-                "debug": Debug("Data not set.", error=True,
+                "debug": Debug(f"Error when trying to fetch data: {ex}.", error=True,
                                state="error").get_message(),
             }
-
-        return send_response(data)
-
-    def post(self, request: HttpRequest):
-        raise Exception("This route doesn't handle the given method.")
-
-    def handle_request(self, req: HttpRequest):
-        """Handle request"""
-        if req.method == "POST":
-            return self.post(req)
-        elif req.method == "GET":
-            return self.get(req)
-        else:
-            raise Exception("This route doesn't handle the given method.")
+        return dj_utils.get_json_response(data)

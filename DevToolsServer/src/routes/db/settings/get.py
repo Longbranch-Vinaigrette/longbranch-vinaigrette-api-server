@@ -3,7 +3,6 @@ import json
 from src.submodules.dev_tools_utils.django_utils.route_object.Main import Main as RouteHandler
 import src.submodules.dev_tools_utils.django_utils as dj_utils
 from src.submodules.dev_tools_utils.dbs.SettingsTable import SettingsTable
-from src.submodules.dev_tools_utils.Debug import Debug
 
 
 class Main(RouteHandler):
