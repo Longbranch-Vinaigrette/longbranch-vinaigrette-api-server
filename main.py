@@ -26,7 +26,6 @@ os.setpgrp()
 # Reference/s
 # https://stackoverflow.com/questions/1112343/how-do-i-capture-sigint-in-python
 def signal_handler(sig, frame):
-    # subprocess.run(["/bin/bash", "-c", f"cd {os.getcwd()}; echo 'Soft shutdown' > ./exit.txt"])
     os.killpg(0, signal.SIGTERM)
 
 
@@ -35,7 +34,7 @@ signal.signal(signal.SIGTERM, signal_handler)
 start_cmds = f"""
 cd DevToolsServer && python3.10 manage.py runserver 37000;
 """
-self_app_management = SelfAppManager(start_cmds)
+self_app_management = SelfAppManager(start_cmds, debug=True)
 
 # App operations
 if args.start:
