@@ -1,17 +1,5 @@
-Last Updated: 2023-01-26
+Last updated: 2023/02/09(YYYY/MM/DD)
 
-# DevTools Server
-\
-This server run tasks related to 'Perseverancia-company' stack, but could be used for something else.\
+# Dev tools server
 
-# Important notes:
-
-The 'main.py' script is only intended for automating start/stop or start on boot, for development\
-use the normal way which is:\
-
-
-```bash
-cd DevToolsServer;
-python3.10 manage.py runserver 37000
-```
-
+Backend server for the website dev-tools-website, for handling and managing repositories.
