@@ -1,15 +1,15 @@
 [submodule "dev_tools_utils"]
-	path = DevToolsServer/submodules/dev_tools_utils
+	path = DevToolsServer/src/submodules/dev_tools_utils
 	url = git@github.com:Perseverancia-company/sub.dev-tools-utils.git
 [submodule "sqlite3_utils"]
-	path = DevToolsServer/submodules/sqlite3_utils
+	path = DevToolsServer/src/submodules/sqlite3_utils
 	url = git@github.com:Perseverancia-company/sub.sqlite3-utils.git
 [submodule "dotenv5"]
-	path = DevToolsServer/submodules/dotenv5
+	path = DevToolsServer/src/submodules/dotenv5
 	url = git@github.com:Perseverancia-company/sub.dotenv5.git
 [submodule "process_utils"]
-	path = DevToolsServer/submodules/process_utils
+	path = DevToolsServer/src/submodules/process_utils
 	url = git@github.com:Perseverancia-company/sub.process-utils.git
 [submodule "gitconfig"]
-	path = DevToolsServer/submodules/gitconfig
+	path = DevToolsServer/src/submodules/gitconfig
 	url = git@github.com:Perseverancia-company/sub.gitconfig.git
