@@ -1,1 +1,0 @@
-from .RepositorySettings import RepositorySettings as RepositorySettingsTable
