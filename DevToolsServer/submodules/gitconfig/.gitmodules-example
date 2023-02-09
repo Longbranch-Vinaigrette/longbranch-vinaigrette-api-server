@@ -1,0 +1,9 @@
+[submodule "sqlite3_utils"]
+	path = /src/submodules/sqlite3_utils
+	url = git@github.com:Perseverancia-company/sub.sqlite3-utils.git
+[submodule "dotenv5"]
+	path = /src/submodules/dotenv5
+	url = git@github.com:Perseverancia-company/sub.dotenv5.git
+[submodule "process_utils"]
+	path = /src/submodules/process_utils
+	url = git@github.com:Perseverancia-company/sub.process-utils.git
