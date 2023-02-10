@@ -19,10 +19,5 @@ def main():
 
 
 if __name__ == '__main__':
-    # Run tests
-    from src.submodules.dev_tools_utils import tests
-    tests.test_db_paths()
-    tests.test_local_repository_manager()
-
     # Run server
     main()

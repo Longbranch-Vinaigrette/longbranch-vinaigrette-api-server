@@ -1,9 +1,11 @@
 from django.http import HttpRequest
 
-from src.submodules.dev_tools_utils.django_utils.route_object.Main import Main as RouteHandler
-import src.submodules.dev_tools_utils.django_utils as dj_utils
-from src.submodules.dev_tools_utils.Debug import Debug
-from src.submodules.dev_tools_utils.local_repository_manager import LocalRepositoryManager
+from DevToolsServer.submodules.py_dev_tools_utils.django_utils.route_object.Main \
+    import Main as RouteHandler
+import DevToolsServer.submodules.py_dev_tools_utils.django_utils as dj_utils
+from DevToolsServer.submodules.py_dev_tools_utils.Debug import Debug
+from DevToolsServer.submodules.py_dev_tools_utils.local_repository_manager \
+    import LocalRepositoryManager
 
 
 class Main(RouteHandler):

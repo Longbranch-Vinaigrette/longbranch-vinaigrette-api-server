@@ -2,9 +2,12 @@ import json
 
 from django.http import HttpResponse, HttpRequest
 
-from src.submodules.dev_tools_utils.dbs.RepositorySettings import RepositorySettings
-from src.submodules.dev_tools_utils.os_stuff.DesktopEntry import DesktopEntry
-from src.submodules.dev_tools_utils.data_configuration.ProjectInfo import ProjectInfo
+from DevToolsServer.submodules.py_dev_tools_utils.dbs.RepositorySettings \
+    import RepositorySettings
+from DevToolsServer.submodules.py_dev_tools_utils.os_stuff.DesktopEntry \
+    import DesktopEntry
+from DevToolsServer.submodules.py_dev_tools_utils.data_configuration.ProjectInfo \
+    import ProjectInfo
 
 
 def process_request(request: HttpRequest):

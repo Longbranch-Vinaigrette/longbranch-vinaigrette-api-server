@@ -1,9 +1,11 @@
 import json
 import pprint
 
-from src.submodules.dev_tools_utils.django_utils.route_object.Main import Main as RouteHandler
-import src.submodules.dev_tools_utils.django_utils as dj_utils
-from src.submodules.dev_tools_utils.data_configuration.ProjectSettings import ProjectSettings
+from DevToolsServer.submodules.py_dev_tools_utils.django_utils.route_object.Main \
+    import Main as RouteHandler
+import DevToolsServer.submodules.py_dev_tools_utils.django_utils as dj_utils
+from DevToolsServer.submodules.py_dev_tools_utils.data_configuration.ProjectSettings \
+    import ProjectSettings
 
 
 class Main(RouteHandler):

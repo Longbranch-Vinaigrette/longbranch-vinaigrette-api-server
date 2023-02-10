@@ -1,8 +1,10 @@
 import json
 
-from src.submodules.dev_tools_utils.django_utils.route_object.Main import Main as RouteHandler
-import src.submodules.dev_tools_utils.django_utils as dj_utils
-import src.submodules.dev_tools_utils.data_configuration.LocalData as LocalData
+from DevToolsServer.submodules.py_dev_tools_utils.django_utils.route_object.Main \
+    import Main as RouteHandler
+import DevToolsServer.submodules.py_dev_tools_utils.django_utils as dj_utils
+import DevToolsServer.submodules.py_dev_tools_utils.data_configuration.LocalData \
+    as LocalData
 
 
 class Main(RouteHandler):

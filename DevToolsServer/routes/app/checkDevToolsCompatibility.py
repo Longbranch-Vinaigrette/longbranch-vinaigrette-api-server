@@ -2,10 +2,12 @@ import json
 
 from django.http import HttpResponse, HttpRequest
 
-from src.submodules.dev_tools_utils.django_utils import DjangoUtils
-from src.submodules.dev_tools_utils.Debug import Debug
-from src.submodules.dev_tools_utils.data_configuration.ProjectInfo import ProjectInfo
-from src.submodules.dev_tools_utils.dbs.RepositorySettings import RepositorySettings
+from DevToolsServer.submodules.py_dev_tools_utils.django_utils import DjangoUtils
+from DevToolsServer.submodules.py_dev_tools_utils.Debug import Debug
+from DevToolsServer.submodules.py_dev_tools_utils.data_configuration.ProjectInfo \
+    import ProjectInfo
+from DevToolsServer.submodules.py_dev_tools_utils.dbs.RepositorySettings \
+    import RepositorySettings
 
 
 class Main:

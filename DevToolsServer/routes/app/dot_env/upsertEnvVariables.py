@@ -2,9 +2,9 @@ import json
 
 from django.http import HttpRequest
 
-from src.submodules.dev_tools_utils.django_utils import DjangoUtils
-from src.submodules.dev_tools_utils.Debug import Debug
-from src.submodules.dotenv5 import DotEnv5
+from DevToolsServer.submodules.py_dev_tools_utils.django_utils import DjangoUtils
+from DevToolsServer.submodules.py_dev_tools_utils.Debug import Debug
+from DevToolsServer.submodules.py_dotenv5 import DotEnv5
 
 
 class Main:

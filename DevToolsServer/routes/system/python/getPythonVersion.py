@@ -1,7 +1,8 @@
 import sys
 
-from src.submodules.dev_tools_utils.django_utils.route_object.Main import Main as RouteHandler
-import src.submodules.dev_tools_utils.django_utils as dj_utils
+from DevToolsServer.submodules.py_dev_tools_utils.django_utils.route_object.Main \
+    import Main as RouteHandler
+import DevToolsServer.submodules.py_dev_tools_utils.django_utils as dj_utils
 
 
 class Main(RouteHandler):
